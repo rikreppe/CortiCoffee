@@ -11,7 +11,10 @@
             background-color: #f4f4f4;
         }
         #dice {
-            font-size: 100px;
+            width: 100px;
+            height: 100px;
+            background: url('dice-rolling.gif') no-repeat center center;
+            background-size: cover;
             cursor: pointer;
             margin: 20px;
             display: inline-block;
@@ -45,7 +48,7 @@
 <body>
     <h1>CortiCoffee Dice Game</h1>
     <p>Click the die to roll!</p>
-    <div id="dice">🎲</div>
+    <div id="dice"></div>
     <div id="promptBox">
         <p id="promptText"></p>
         <button onclick="closePrompt()">Close</button>
@@ -57,7 +60,9 @@
     </div>
     <audio id="diceSound" src="dice-roll.mp3"></audio>
     <script>
-        const diceFaces = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"];
+        const diceFaces = [
+            'dice-1.png', 'dice-2.png', 'dice-3.png', 'dice-4.png', 'dice-5.png', 'dice-6.png'
+        ];
         const prompts = [
             "Espresso Bottleneck: You have five orders all requiring the espresso machine...",
             "Overlapping Orders: Two customers order identical drinks at the same time...",
@@ -72,13 +77,12 @@
         function rollDice() {
             let dice = document.getElementById('dice');
             let sound = document.getElementById('diceSound');
-            dice.classList.add('rolling');
+            dice.style.backgroundImage = "url('dice-rolling.gif')";
             sound.play();
             
             setTimeout(() => {
-                dice.classList.remove('rolling');
                 let roll = Math.floor(Math.random() * 6);
-                dice.innerText = diceFaces[roll];
+                dice.style.backgroundImage = `url('${diceFaces[roll]}')`;
                 fullPromptText = prompts[roll];
                 document.getElementById('promptText').innerText = fullPromptText.split(':')[0];
                 document.getElementById('promptBox').style.display = 'block';
