@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CortiCoffee Dice Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        #dice {
+            font-size: 100px;
+            cursor: pointer;
+            margin: 20px;
+        }
+        #promptBox {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+        #progress {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>CortiCoffee Dice Game</h1>
+    <p>Click the die to roll!</p>
+    <div id="dice">🎲</div>
+    <div id="promptBox">
+        <p id="promptText"></p>
+        <button onclick="closePrompt()">Close</button>
+    </div>
+    <div id="progress">
+        <h2>Game Progress</h2>
+        <ul id="progressList"></ul>
+    </div>
+    <audio id="diceSound" src="dice-roll.mp3"></audio>
+    <script>
+        const prompts = [
+            "Espresso Bottleneck: You have five orders all requiring the espresso machine...",
+            "Overlapping Orders: Two customers order identical drinks at the same time...",
+            "Machine Downtime Challenge: The grinder is temporarily unavailable for two minutes...",
+            "Rush Hour Efficiency: A sudden morning rush brings in 10 new orders...",
+            "Supply Chain Coordination: A batch of fresh ingredients arrives mid-shift...",
+            "Customization Chaos: Every drink in the last five orders has custom modifications..."
+        ];
+
+        function rollDice() {
+            document.getElementById('diceSound').play();
+            let roll = Math.floor(Math.random() * 6);
+            let promptText = prompts[roll];
+            
+            document.getElementById('promptText').innerText = promptText;
+            document.getElementById('promptBox').style.display = 'block';
+            
+            let progressList = document.getElementById('progressList');
+            let listItem = document.createElement('li');
+            listItem.textContent = `Rolled ${roll + 1}: ${promptText.split(':')[0]}`;
+            progressList.appendChild(listItem);
+        }
+
+        function closePrompt() {
+            document.getElementById('promptBox').style.display = 'none';
+        }
+
+        document.getElementById('dice').addEventListener('click', rollDice);
+    </script>
+</body>
+</html>
